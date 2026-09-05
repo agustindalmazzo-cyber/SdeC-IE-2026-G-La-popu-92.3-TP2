@@ -1,0 +1,48 @@
+%include "asm_io.inc"
+segment .data
+
+message1 db "Digite un n´umero: ",0
+message2 db "Digite otro n´umero: ", 0
+message3 db "El mayor n´umero es: ", 0
+
+segment .bss
+
+input1 resd 1 ; primer n´umero ingresado
+
+segment .text
+global _asm_main
+_asm_main:
+enter 0,0 ;
+ pusha
+
+mov eax, message1 ; imprime el primer mensaje
+call print_string
+call read_int ; ingresa el primer n´umero
+mov [input1], eax
+
+mov eax, message2 ; imprime el segundo mensaje
+call print_string
+call read_int ; ingresa el segundo n´umero (en eax)
+
+xor ebx, ebx ; ebx = 0
+cmp eax, [input1] ; compara el segundo y el primer n´umero
+setg bl ; ebx = (input2 > input1) ? 1 : 0
+neg ebx ; ebx = (input2 > input1) ? 0xFFFFFFFF : 0
+mov ecx, ebx ; ecx = (input2 > input1) ? 0xFFFFFFFF : 0
+3and ecx, eax ; ecx = (input2 > input1) ? input2 : 0
+not ebx ; ebx = (input2 > input1) ? 0 : 0xFFFFFFFF
+and ebx, [input1] ; ebx = (input2 > input1) ? 0 : input1
+or ecx, ebx ; ecx = (input2 > input1) ? input2 : input1
+
+mov eax, message3 ; imprime los resultado
+call print_string
+mov eax, ecx
+call print_int
+call print_nl
+
+popa
+mov eax, 0 ; retorna a C
+leave
+ret
+
+PAGINA 56
