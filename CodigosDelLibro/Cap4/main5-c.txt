@@ -1,0 +1,14 @@
+include <stdio.h>
+/∗ prototipo para la rutina en ensamblador ∗/
+void calc sum( int , int ∗ ) attribute ((cdecl ));
+int main( void )
+{
+int n, sum;
+printf (”Sumar enteros hasta: ”);
+scanf(” %d”, &n);
+calc sum(n, &sum);
+printf (”Sum is %d\n”, sum);
+return 0;
+}
+
+PAGINA 88

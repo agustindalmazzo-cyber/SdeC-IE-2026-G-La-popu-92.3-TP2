@@ -1,0 +1,68 @@
+; file: sub1.asm
+; Subprograma programa de ejemplo
+%include "asm_io.inc"
+
+segment .data
+prompt1 db "Ingrese un n´umero: ", 0 ; no olvide el NULL
+prompt2 db "Ingrese otro n´umero: ", 0
+outmsg1 db "Ud. ha ingresado ", 0
+outmsg2 db " y ", 0
+outmsg3 db ", la suma de ellos es ", 0
+
+segment .bss
+input1 resd 1
+input2 resd 1
+
+segment .text
+global _asm_main
+_asm_main:
+enter 0,0 ; setup routine
+pusha
+mov eax, prompt1 ; imprime el prompt
+call print_string
+
+mov ebx, input1 ; almacena la direcci´on de input1 en ebx
+mov ecx, ret1 ; almacena la direcci´on de retorno en ecx
+jmp short get_int ; lee un entero
+ret1:
+mov eax, prompt2 ; imprime el prompt
+call print_string
+
+mov ebx, input2
+mov ecx, \$ + 7 ; ecx = esta direcci´on + 7
+jmp short get_int
+
+mov eax, [input1] ; eax = palabra doble en input1
+add eax, [input2] ; eax += palabra doble en input2
+mov ebx, eax ; ebx = eax
+
+mov eax, outmsg1
+call print_string ; imprime el primer mensaje
+mov eax, [input1]
+call print_int ; imprime input1
+mov eax, outmsg2
+call print_string ; imprime el segundo mensaje
+mov eax, [input2]
+call print_int ; imprime input2
+mov eax, outmsg3
+call print_string ; imprime el tercer mensaje
+mov eax, ebx
+call print_int ; imprime sum (ebx)
+call print_nl ; imprime nueva l´ınea
+
+popa
+mov eax, 0 ; retorno a C
+leave
+ret
+; subprograma get_int
+; Par´ametros:
+; ebx - direcci´on de la palabra doble que almacena el entero
+; ecx - direcci´on de la instrucci´on a donde retornar
+; Notes:
+; el valor de eax se destruye
+get_int:
+call read_int
+mov [ebx], eax ; almacena la entrada en memoria
+jmp ecx ; salta al llamador
+
+PAGINA 68

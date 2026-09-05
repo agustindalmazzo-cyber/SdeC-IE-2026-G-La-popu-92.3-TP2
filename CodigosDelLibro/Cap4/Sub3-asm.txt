@@ -1,0 +1,100 @@
+ %include "asm_io.inc"
+
+segment .data
+sum dd 0
+
+segment .bss
+input resd 1
+
+;
+; pseudo-c´odigo
+; i = 1;
+; sum = 0;
+; while( get_int(i, &input), input != 0 ) {
+; sum += input;
+; i++;
+; }
+; print_sum(num);
+segment .text
+global _asm_main
+_asm_main:
+enter 0,0 ; setup routine
+pusha
+
+mov edx, 1 ; edx es ’i’ en el pseudoc´odigo
+while_loop:
+push edx ; guarda ’i’ en la pila
+push dword input ; empuja la direcci´on de input en la pila
+call get_int
+add esp, 8 ; quita i e &input de la pila
+
+mov eax, [input]
+cmp eax, 0
+je end_while
+
+add [sum], eax ; sum += input
+
+inc edx
+jmp short while_loop
+
+end_while:
+push dword [sum] ; empuja el valor de sum en la pila
+call print_sum
+pop ecx ; quita [sum] de la pila
+
+popa
+leave
+ret
+
+; subprograma get_int
+; Param´etros (en el orden que es empujan en la pila)
+; n´umero de input (en [ebp + 12])
+; direcci´on de input en [ebp + 8])
+; Notas:
+; Los valores de eax y ebx se destruyen
+segment .data
+prompt db ") Ingrese un entero (0 para salir): ", 0
+
+segment .text
+5get_int:
+push ebp
+mov ebp, esp
+
+mov eax, [ebp + 12]
+call print_int
+
+mov eax, prompt
+call print_string
+
+call read_int
+mov ebx, [ebp + 8]
+mov [ebx], eax ; almacena input en memoria
+
+pop ebp
+ret ; retorna al llamador
+
+; subprograma print_sum
+; imprime la suma
+; Parameter:
+; suma a imprimir (en [ebp+8])
+; Nota: destruye el valor de eax
+;
+segment .data
+result db "La suma es ", 0
+
+segment .text
+print_sum:
+push ebp
+mov ebp, esp
+
+mov eax, result
+call print_string
+
+mov eax, [ebp+8]
+call print_int
+call print_nl
+
+pop ebp
+ret
+
+PAGINA 75
