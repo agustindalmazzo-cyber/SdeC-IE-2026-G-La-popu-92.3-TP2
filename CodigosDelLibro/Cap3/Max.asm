@@ -29,7 +29,7 @@ cmp eax, [input1] ; compara el segundo y el primer n´umero
 setg bl ; ebx = (input2 > input1) ? 1 : 0
 neg ebx ; ebx = (input2 > input1) ? 0xFFFFFFFF : 0
 mov ecx, ebx ; ecx = (input2 > input1) ? 0xFFFFFFFF : 0
-3and ecx, eax ; ecx = (input2 > input1) ? input2 : 0
+and ecx, eax ; ecx = (input2 > input1) ? input2 : 0
 not ebx ; ebx = (input2 > input1) ? 0 : 0xFFFFFFFF
 and ebx, [input1] ; ebx = (input2 > input1) ? 0 : input1
 or ecx, ebx ; ecx = (input2 > input1) ? input2 : input1

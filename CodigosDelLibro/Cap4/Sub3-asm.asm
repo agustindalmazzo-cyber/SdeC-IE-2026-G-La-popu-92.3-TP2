@@ -16,8 +16,8 @@ input resd 1
 ; }
 ; print_sum(num);
 segment .text
-global _asm_main
-_asm_main:
+global asm_main
+asm_main:
 enter 0,0 ; setup routine
 pusha
 
@@ -56,7 +56,7 @@ segment .data
 prompt db ") Ingrese un entero (0 para salir): ", 0
 
 segment .text
-5get_int:
+get_int:
 push ebp
 mov ebp, esp
 
@@ -97,4 +97,3 @@ call print_nl
 pop ebp
 ret
 
-PAGINA 75

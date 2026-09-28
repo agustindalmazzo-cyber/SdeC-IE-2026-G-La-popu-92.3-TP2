@@ -1,4 +1,4 @@
-Método 1
+
 
 int count bits ( unsigned int data )
 {
@@ -49,4 +49,4 @@ return x;
 }
 
 
-PAGINA 62
+

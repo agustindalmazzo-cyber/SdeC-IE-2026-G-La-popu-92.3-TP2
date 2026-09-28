@@ -13,11 +13,11 @@
 ; return sum;
 ; }
 segment .text
-global _calc_sum
+global calc_sum
 ;
 ; local variable:
 ; sum at [ebp-4]
-_calc_sum:
+calc_sum:
 enter 4,0 ; hace espacio en la pila para sum
 
 mov dword [ebp-4],0 ; sum = 0
@@ -36,4 +36,3 @@ mov eax, [ebp-4] ; eax = sum
 leave
 ret
 
-PAGINA 90

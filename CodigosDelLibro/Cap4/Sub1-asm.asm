@@ -14,8 +14,8 @@ input1 resd 1
 input2 resd 1
 
 segment .text
-global _asm_main
-_asm_main:
+global asm_main
+asm_main:
 enter 0,0 ; setup routine
 pusha
 mov eax, prompt1 ; imprime el prompt
@@ -29,7 +29,7 @@ mov eax, prompt2 ; imprime el prompt
 call print_string
 
 mov ebx, input2
-mov ecx, \$ + 7 ; ecx = esta direcci´on + 7
+mov ecx, $ + 7 ; ecx = esta direcci´on + 7
 jmp short get_int
 
 mov eax, [input1] ; eax = palabra doble en input1
@@ -65,4 +65,4 @@ call read_int
 mov [ebx], eax ; almacena la entrada en memoria
 jmp ecx ; salta al llamador
 
-PAGINA 68
+
