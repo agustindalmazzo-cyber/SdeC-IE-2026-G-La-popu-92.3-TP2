@@ -5,7 +5,8 @@ import ctypes
 # 1. Cargamos la librería compilada de C
 libcalculos = ctypes.CDLL('./libcalculos.so')
 
-# 2. Definimos los tipos de datos (Python manda un float y C devuelve un entero)
+# 2. Definimos los ti
+# pos de datos (Python manda un float y C devuelve un entero)
 libcalculos.procesar_gini.argtypes = (ctypes.c_float,)
 libcalculos.procesar_gini.restype = ctypes.c_int
 
