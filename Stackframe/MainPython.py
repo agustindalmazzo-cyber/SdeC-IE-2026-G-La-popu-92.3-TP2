@@ -40,7 +40,7 @@ def conectar_api():
                     # Llamamos a nuestro programa en C pasándole el valor flotante
                     resultado_c = libcalculos.procesar_gini(valor)
                     
-                    print(f"Año: {anio} | GINI Original: {valor} | GINI Procesado en C (+1): {resultado_c}")
+                    print(f"Año: {anio} | GINI Original: {valor} | GINI Procesado en Asm (+1): {resultado_c}")
             
             return datos
         else:
